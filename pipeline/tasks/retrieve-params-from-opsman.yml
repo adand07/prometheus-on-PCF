@@ -16,6 +16,9 @@ params:
   opsman_url:
   pcf_opsman_admin_username:
   pcf_opsman_admin_password:
+  mysql_address:
+  mysql_username:
+  mysql_password:
 
 run:
   path: pcf-prometheus-git/pipeline/tasks/retrieve-params-from-opsman.sh
