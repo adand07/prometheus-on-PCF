@@ -4,6 +4,11 @@ mkdir dynamic-params || true
 PARAMS_FILE=dynamic-params/params.yml
 rm -f ${PARAMS_FILE}
 
+OPS_DIR=dynamic-params/ops
+mkdir dynamic-params/ops || true
+rm -f ${OPS_DIR}/*.yml
+touch dynamic-params/ops/empty.yml
+
 CURL="om --target https://${opsman_url} -k \
   --username ${pcf_opsman_admin_username} \
   --password ${pcf_opsman_admin_password} \
@@ -22,8 +27,6 @@ echo "traffic_controller_external_port: ${traffic_controller_external_port}" >> 
 
 metron_deployment_name=$(jq -r '.instance_groups[] | select(.name == "diego_brain") | .jobs[] | select(.name == "metron_agent") | .properties.metron_agent.deployment' < /tmp/cf-manifest.yml)
 echo "metron_deployment_name: ${metron_deployment_name}" >> ${PARAMS_FILE}
-
-touch dynamic-params/ops/empty.yml
 
 if [[ -n "${mysql_address}" ]]; then
   echo ${mysql_address} >> ${PARAMS_FILE}
