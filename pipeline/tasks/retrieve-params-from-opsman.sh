@@ -28,9 +28,9 @@ echo "traffic_controller_external_port: ${traffic_controller_external_port}" >> 
 metron_deployment_name=$(jq -r '.instance_groups[] | select(.name == "diego_brain") | .jobs[] | select(.name == "metron_agent") | .properties.metron_agent.deployment' < /tmp/cf-manifest.yml)
 echo "metron_deployment_name: ${metron_deployment_name}" >> ${PARAMS_FILE}
 
-if [[ -n "${mysql_address}" ]]; then
-  echo ${mysql_address} >> ${PARAMS_FILE}
-  echo ${mysql_username} >> ${PARAMS_FILE}
-  echo ${mysql_password} >> ${PARAMS_FILE}
-  ln -s prometheus-git-repo/manifests/operators/monitor-mysql.yml dynamic-params/ops/monitor-mysql.yml
+if [[ "${mysql_address}" != "null" ]]; then
+  echo "mysql_address: ${mysql_address}" >> ${PARAMS_FILE}
+  echo "mysql_username: ${mysql_username}" >> ${PARAMS_FILE}
+  echo "mysql_password: ${mysql_password}" >> ${PARAMS_FILE}
+  ln -s prometheus-git-repo/manifests/operators/monitor-mysql.yml ${OPS_DIR}/monitor-mysql.yml
 fi
