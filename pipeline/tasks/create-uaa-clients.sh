@@ -43,11 +43,11 @@ echo "Creating SSH tunnel"
 echo "$opsman_ssh_private_key" > opsman.key
 
 chmod 0600 opsman.key
-ssh -oStrictHostKeyChecking=no -fN \
-    ${opsman_ssh_user}@${opsman_url} \
+ssh ${opsman_ssh_user}@${opsman_url} \
     -i opsman.key \
+    -fN \
     -L 8443:127.0.0.1:8443
-sleep 2
+sleep 5
 
 echo "Logging into BOSH UAA..."
 uaac target https://localhost:8443 --skip-ssl-validation
