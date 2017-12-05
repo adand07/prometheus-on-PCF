@@ -58,6 +58,7 @@ jobs:
       uaa_bosh_exporter_client_secret: ((uaa_bosh_exporter_client_secret))
       uaa_clients_firehose_exporter_secret: ((uaa_clients_firehose_exporter_secret))
       uaa_clients_cf_exporter_secret: ((uaa_clients_cf_exporter_secret))
+      opsman_url: ((opsman_url))
       opsman_ssh_user: ((opsman_ssh_user))
       opsman_ssh_private_key: ((opsman_ssh_private_key))
 
@@ -70,6 +71,9 @@ jobs:
     - get: pcf-bosh-creds
   - task: install-node-exporter
     file: pcf-prometheus-git/pipeline/tasks/install-node-exporter.yml
+    params:
+      opsman_ssh_user: ((opsman_ssh_user))
+      opsman_ssh_private_key: ((opsman_ssh_private_key))
 
 - name: deploy
   plan:
