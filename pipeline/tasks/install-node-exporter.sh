@@ -21,6 +21,7 @@ CURL="om --target https://${opsman_url} -k \
   --password ${pcf_opsman_admin_password} \
   curl"
 director_id=$($CURL --path=/api/v0/deployed/products | jq -r '.[] | select (.type == "p-bosh") | .guid')
+director_ip=$($CURL --path=/api/v0/deployed/products/$director_id/static_ips | jq -r .[0].ips[0])
 
 chmod 0600 opsman.key
 ssh -oStrictHostKeyChecking=no -N \
