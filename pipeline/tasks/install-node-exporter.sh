@@ -6,7 +6,10 @@ TMPFILE=$(mktemp "$TMPDIR/runtime-config.XXXXXX")
 
 root_dir=$(cd "$(dirname "$0")/.." && pwd)
 
+ls
+
 CREDS=${pcf-bosh-creds}
+cat "$CREDS/bosh-ca.pem"
 
 export BOSH_ENVIRONMENT="127.0.0.1"
 export BOSH_CA_CERT=$(cat "$CREDS/bosh-ca.pem")
