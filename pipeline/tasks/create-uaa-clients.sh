@@ -47,6 +47,7 @@ ssh -oStrictHostKeyChecking=no -fN \
     ${opsman_ssh_user}@${opsman_url} \
     -i opsman.key \
     -L 8443:127.0.0.1:8443
+sleep 2
 
 echo "Logging into BOSH UAA..."
 uaac target https://localhost:8443 --skip-ssl-validation
