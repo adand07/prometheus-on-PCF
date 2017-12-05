@@ -43,10 +43,10 @@ echo "Creating SSH tunnel"
 echo "$opsman_ssh_private_key" > opsman.key
 
 chmod 0600 opsman.key
-ssh -oStrictHostKeyChecking=no -fN \
+ssh -oStrictHostKeyChecking=no -N \
     ${opsman_ssh_user}@${opsman_url} \
     -i opsman.key \
-    -L 8080:${director_ip}:8443
+    -L 8080:${director_ip}:8443 &
 echo $! > ssh-tunnel.pid
 
 echo "Logging into BOSH UAA..."
