@@ -47,7 +47,8 @@ ssh -oStrictHostKeyChecking=no -fN \
     ${opsman_ssh_user}@${opsman_url} \
     -i opsman.key \
     -L 8080:${director_ip}:8443
-sleep 2
+echo $! > ssh-tunnel.pid
+
 echo "Logging into BOSH UAA..."
 uaac target https://localhost:8080 --skip-ssl-validation
 uaac token owner get login -s $uaa_login_password<<EOF
@@ -62,3 +63,5 @@ uaac client add bosh_exporter \
   --authorized_grant_types client_credentials,refresh_token \
   --authorities bosh.read \
   --scope bosh.read  || true #ignore errors
+
+kill $(cat ssh-tunnel.pid)
