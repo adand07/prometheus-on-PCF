@@ -40,7 +40,8 @@ uaa_login_password=$($CURL --path=/api/v0/deployed/products/$director_id/credent
 uaa_admin_password=$($CURL --path=/api/v0/deployed/director/credentials/uaa_admin_user_credentials | jq -r .credential.value.password)
 
 echo "Creating SSH tunnel"
-echo ${opsman_ssh_private_key} > opsman.key
+echo "$opsman_ssh_private_key" > opsman.key
+
 chmod 0600 opsman.key
 ssh -vvv -oStrictHostKeyChecking=no \
     -nNT ${opsman_ssh_user}@${opsman_url} \
