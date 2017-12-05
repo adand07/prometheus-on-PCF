@@ -16,6 +16,12 @@ export BOSH_CLIENT_SECRET=$(cat "$CREDS/bosh-pass")
 echo "Creating SSH tunnel"
 echo "$opsman_ssh_private_key" > opsman.key
 
+CURL="om --target https://${opsman_url} -k \
+  --username ${pcf_opsman_admin_username} \
+  --password ${pcf_opsman_admin_password} \
+  curl"
+director_id=$($CURL --path=/api/v0/deployed/products | jq -r '.[] | select (.type == "p-bosh") | .guid')
+
 chmod 0600 opsman.key
 ssh -oStrictHostKeyChecking=no -N \
     ${opsman_ssh_user}@${opsman_url} \
