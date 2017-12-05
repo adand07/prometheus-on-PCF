@@ -1,5 +1,5 @@
 #!/bin/bash
-set -e
+set -ex
 
 TMPDIR=${TMPDIR:-/tmp}
 TMPFILE=$(mktemp "$TMPDIR/runtime-config.XXXXXX")
