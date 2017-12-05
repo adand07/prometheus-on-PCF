@@ -1,5 +1,5 @@
 #!/bin/bash
-set -e
+set -ex
 
 CURL="om --target https://${opsman_url} -k \
   --username ${pcf_opsman_admin_username} \
@@ -39,8 +39,11 @@ echo "Getting BOSH UAA creds..."
 uaa_login_password=$($CURL --path=/api/v0/deployed/products/$director_id/credentials/.director.uaa_login_client_credentials | jq -r .credential.value.password)
 uaa_admin_password=$($CURL --path=/api/v0/deployed/director/credentials/uaa_admin_user_credentials | jq -r .credential.value.password)
 
+echo "Creating SSH tunnel"
+ssh -nNT ${opsman_url} -i ${opsman_ssh_private_key} -L 8443:${director_ip}:8443
+
 echo "Logging into BOSH UAA..."
-uaac target https://$director_ip:8443 --skip-ssl-validation
+uaac target https://localhost:8443 --skip-ssl-validation
 uaac token owner get login -s $uaa_login_password<<EOF
 admin
 $uaa_admin_password
