@@ -42,7 +42,10 @@ uaa_admin_password=$($CURL --path=/api/v0/deployed/director/credentials/uaa_admi
 echo "Creating SSH tunnel"
 echo ${opsman_ssh_private_key} > opsman.key
 chmod 0600 opsman.key
-ssh -oStrictHostKeyChecking=no -nNT ${opsman_ssh_user}@${opsman_url} -i opsman.key -L 8443:${director_ip}:8443
+ssh -vvv -oStrictHostKeyChecking=no \
+    -nNT ${opsman_ssh_user}@${opsman_url} \
+    -i opsman.key \
+    -L 8443:${director_ip}:8443
 
 echo "Logging into BOSH UAA..."
 uaac target https://localhost:8443 --skip-ssl-validation
