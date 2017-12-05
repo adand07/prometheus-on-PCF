@@ -6,9 +6,12 @@ TMPFILE=$(mktemp "$TMPDIR/runtime-config.XXXXXX")
 
 root_dir=$(cd "$(dirname "$0")/.." && pwd)
 
-source ${root_dir}/tasks/common.sh
+CREDS=${pcf-bosh-creds}
 
-login_to_director pcf-bosh-creds
+export BOSH_ENVIRONMENT="127.0.0.1"
+export BOSH_CA_CERT=$(cat "$CREDS/bosh-ca.pem")
+export BOSH_CLIENT=$(cat "$CREDS/bosh-username")
+export BOSH_CLIENT_SECRET=$(cat "$CREDS/bosh-pass")
 
 echo "Creating SSH tunnel"
 echo "$opsman_ssh_private_key" > opsman.key
@@ -17,7 +20,12 @@ chmod 0600 opsman.key
 ssh -oStrictHostKeyChecking=no -N \
     ${opsman_ssh_user}@${opsman_url} \
     -i opsman.key \
-    -L 8080:${director_ip}:8443 &
+    -L 25555:${director_ip}:25555 \
+    -L 4222:${director_ip}:4222 \
+    -L 25250:${director_ip}:25250 \
+    -L 25777:${director_ip}:25777 \
+    &
+
 echo $! > ssh-tunnel.pid
 
 echo "Uploading Node exporter Release..."

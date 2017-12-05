@@ -72,6 +72,7 @@ jobs:
   - task: install-node-exporter
     file: pcf-prometheus-git/pipeline/tasks/install-node-exporter.yml
     params:
+      opsman_url: ((opsman_url))
       opsman_ssh_user: ((opsman_ssh_user))
       opsman_ssh_private_key: ((opsman_ssh_private_key))
 
