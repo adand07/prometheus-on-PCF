@@ -1,6 +1,7 @@
 #!/bin/bash
 set -ex
 
+source ${root_dir}/tasks/common.sh
 echo "$opsman_ssh_private_key" > opsman.key
 chmod 0600 opsman.key
 ssh -oStrictHostKeyChecking=no \
