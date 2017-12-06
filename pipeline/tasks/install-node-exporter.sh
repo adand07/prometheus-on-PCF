@@ -34,7 +34,7 @@ ssh -oStrictHostKeyChecking=no -N \
 echo $! > ssh-tunnel.pid
 
 echo "Uploading Node exporter Release..."
-bosh2 -n upload-release node-exporter-release/node-exporter-*.tgz
+bosh2 upload-release https://bosh.io/d/github.com/cloudfoundry-community/node-exporter-boshrelease --sha1 a0018f96dd78525cae3687cfa1d9353aac7a0e02
 
 node_exporter_version=$(cat node-exporter-release/version)
 bosh2 -n update-runtime-config --name=node_exporter pcf-prometheus-git/runtime.yml -v node_exporter_version=${node_exporter_version}

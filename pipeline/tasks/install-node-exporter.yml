@@ -7,7 +7,6 @@ image_resource:
     repository: starkandwayne/concourse
 
 inputs:
-- name: node-exporter-release
 - name: pcf-prometheus-git
 - name: pcf-bosh-creds
 
