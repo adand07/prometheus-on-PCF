@@ -6,15 +6,10 @@ TMPFILE=$(mktemp "$TMPDIR/runtime-config.XXXXXX")
 
 root_dir=$(cd "$(dirname "$0")/.." && pwd)
 
-ls
-
-CREDS=${pcf-bosh-creds}
-cat "$CREDS/bosh-ca.pem"
-
 export BOSH_ENVIRONMENT="127.0.0.1"
-export BOSH_CA_CERT=$(cat "$CREDS/bosh-ca.pem")
-export BOSH_CLIENT=$(cat "$CREDS/bosh-username")
-export BOSH_CLIENT_SECRET=$(cat "$CREDS/bosh-pass")
+export BOSH_CA_CERT=$(cat "pcf-bosh-creds/bosh-ca.pem")
+export BOSH_CLIENT=$(cat "pcf-bosh-creds/bosh-username")
+export BOSH_CLIENT_SECRET=$(cat "pcf-bosh-creds/bosh-pass")
 
 echo "Creating SSH tunnel"
 echo "$opsman_ssh_private_key" > opsman.key
@@ -23,8 +18,8 @@ CURL="om --target https://${opsman_url} -k \
   --username ${pcf_opsman_admin_username} \
   --password ${pcf_opsman_admin_password} \
   curl"
-director_id=$($CURL --path=/api/v0/deployed/products | jq -r '.[] | select (.type == "p-bosh") | .guid')
-director_ip=$($CURL --path=/api/v0/deployed/products/$director_id/static_ips | jq -r .[0].ips[0])
+export director_id=$($CURL --path=/api/v0/deployed/products | jq -r '.[] | select (.type == "p-bosh") | .guid')
+export director_ip=$($CURL --path=/api/v0/deployed/products/$director_id/static_ips | jq -r .[0].ips[0])
 
 chmod 0600 opsman.key
 ssh -oStrictHostKeyChecking=no -N \
