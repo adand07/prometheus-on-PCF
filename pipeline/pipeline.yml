@@ -73,13 +73,19 @@ jobs:
 
 - name: deploy
   plan:
-  - get: pcf-prometheus-git
-    passed: [install-node-exporter]
-  - get: prometheus-git-repo
-  - get: prometheus-release
-  - get: pcf-bosh-creds
+  - aggregate:
+    - get: pcf-prometheus-git
+    - get: prometheus-git-repo
+    - get: pcf-bosh-creds
+      params:
+        deployment: prometheus
+  - task: upload-prometheus-release
+    file: pcf-prometheus-git/pipeline/tasks/upload-prometheus-release.yml
     params:
-      deployment: prometheus
+      external_bosh_address: ((external_bosh_address))
+      external_bosh_client: ((external_bosh_client))
+      external_bosh_client_secret: ((external_bosh_client_secret))
+      external_bosh_ca_cert: ((external_bosh_ca_cert))
   - task: retrieve-params-from-opsman
     file: pcf-prometheus-git/pipeline/tasks/retrieve-params-from-opsman.yml
     params:

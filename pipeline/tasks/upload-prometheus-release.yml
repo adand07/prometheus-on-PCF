@@ -1,0 +1,18 @@
+---
+platform: linux
+
+image_resource:
+  type: docker-image
+  source:
+    repository: starkandwayne/concourse
+
+inputs:
+
+params:
+  external_bosh_address:
+  external_bosh_client:
+  external_bosh_client_secret:
+  external_bosh_ca_cert:
+
+run:
+  path: pcf-prometheus-git/pipeline/tasks/upload-prometheus-release.sh
