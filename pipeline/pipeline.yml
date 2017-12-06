@@ -20,12 +20,6 @@ resources:
   source:
     uri: https://github.com/cloudfoundry-community/prometheus-boshrelease.git
     branch: master
-- name: prometheus-release
-  type: github-release
-  source:
-    user: cloudfoundry-community
-    repository: prometheus-boshrelease
-    access_token: ((github_token))
 - name: pcf-bosh-creds
   type: bosh-creds
   source:

@@ -7,6 +7,7 @@ image_resource:
     repository: starkandwayne/concourse
 
 inputs:
+- name: pcf-prometheus-git
 
 params:
   external_bosh_address:
