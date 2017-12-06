@@ -11,7 +11,11 @@ source ${root_dir}/tasks/common.sh
 echo "Creating SSH tunnel"
 echo "$opsman_ssh_private_key" > opsman.key
 chmod 0600 opsman.key
-ssh -4 -D 5000 -NC ${opsman_ssh_user}@${opsman_url} -i opsman.key &
+ssh -oStrictHostKeyChecking=no \
+    -4 -D 5000 -NC \
+    ${opsman_ssh_user}@${opsman_url} \
+    -i opsman.key &
+
 echo $! > ssh-tunnel.pid
 
 export BOSH_ALL_PROXY=socks5://localhost:5000
