@@ -8,7 +8,7 @@ image_resource:
 
 inputs:
 - name: pcf-prometheus-git
-
+- name: pcf-bosh-creds
 params:
   external_bosh_address:
   external_bosh_client:
