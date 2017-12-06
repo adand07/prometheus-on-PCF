@@ -91,8 +91,6 @@ jobs:
       source_file: pcf-bosh-creds/((director_for_deployment)).json
       deployment: prometheus
       manifest: prometheus-git-repo/manifests/prometheus.yml
-      releases:
-      - prometheus-release/prometheus-*.tgz
       ops_files:
       - prometheus-git-repo/manifests/operators/monitor-bosh.yml
       - prometheus-git-repo/manifests/operators/enable-bosh-uaa.yml
