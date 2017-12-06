@@ -26,12 +26,6 @@ resources:
     user: cloudfoundry-community
     repository: prometheus-boshrelease
     access_token: ((github_token))
-- name: node-exporter-release
-  type: github-release
-  source:
-    user: cloudfoundry-community
-    repository: node-exporter-boshrelease
-    access_token: ((github_token))
 - name: pcf-bosh-creds
   type: bosh-creds
   source:
@@ -65,13 +59,14 @@ jobs:
 - name: install-node-exporter
   plan:
   - aggregate:
-    - get: node-exporter-release
     - get: pcf-prometheus-git
-      passed: [create-uaa-clients]
     - get: pcf-bosh-creds
   - task: install-node-exporter
     file: pcf-prometheus-git/pipeline/tasks/install-node-exporter.yml
     params:
+      node_exporter_version: ((node_exporter_version))
+      pcf_opsman_admin_username: ((pcf_opsman_admin_username))
+      pcf_opsman_admin_password: ((pcf_opsman_admin_password))
       opsman_url: ((opsman_url))
       opsman_ssh_user: ((opsman_ssh_user))
       opsman_ssh_private_key: ((opsman_ssh_private_key))
