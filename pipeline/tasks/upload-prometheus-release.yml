@@ -10,6 +10,9 @@ inputs:
 - name: pcf-prometheus-git
 - name: pcf-bosh-creds
 params:
+  opsman_url:
+  opsman_ssh_user:
+  opsman_ssh_private_key:
   external_bosh_address:
   external_bosh_client:
   external_bosh_client_secret:

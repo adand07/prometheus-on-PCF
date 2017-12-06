@@ -11,13 +11,13 @@ inputs:
 
 params:
   opsman_url:
+  opsman_ssh_user:
+  opsman_ssh_private_key:
   pcf_opsman_admin_username:
   pcf_opsman_admin_password:
   uaa_bosh_exporter_client_secret:
   uaa_clients_firehose_exporter_secret:
   uaa_clients_cf_exporter_secret:
-  opsman_ssh_user:
-  opsman_ssh_private_key:
 
 run:
   path: pcf-prometheus-git/pipeline/tasks/create-uaa-clients.sh
