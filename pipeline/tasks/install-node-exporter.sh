@@ -6,6 +6,8 @@ TMPFILE=$(mktemp "$TMPDIR/runtime-config.XXXXXX")
 
 root_dir=$(cd "$(dirname "$0")/.." && pwd)
 
+source ${root_dir}/tasks/common.sh
+
 echo "Creating SSH tunnel"
 echo "$opsman_ssh_private_key" > opsman.key
 chmod 0600 opsman.key
